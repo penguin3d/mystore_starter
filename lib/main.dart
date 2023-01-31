@@ -14,7 +14,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mystore_starter/providers/go_router_provider.dart';
+import 'package:mystore_starter/routes/go_router_provider.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
