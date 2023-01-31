@@ -12,18 +12,13 @@ import 'dart:async';
 // import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 // import 'firebase_options.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-
-import 'package:mystore_starter/pages/home.dart';
-import 'package:mystore_starter/pages/login.dart';
-import 'package:mystore_starter/pages/profile.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:mystore_starter/providers/authstatenotifier.dart';
 import 'package:mystore_starter/providers/go_router_provider.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 Future<void> main() async {
+  setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   //

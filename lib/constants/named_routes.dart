@@ -1,2 +1,3 @@
 
-const String home = 'home';
+const String home = 'Home';
+const String profile = 'Profile';
