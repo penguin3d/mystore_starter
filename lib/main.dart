@@ -18,7 +18,10 @@ import 'package:mystore_starter/pages/home.dart';
 import 'package:mystore_starter/pages/login.dart';
 import 'package:mystore_starter/pages/profile.dart';
 
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mystore_starter/providers/authstatenotifier.dart';
+import 'package:mystore_starter/providers/go_router_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -30,76 +33,96 @@ Future<void> main() async {
   //       clientId:
   //           '404767129554-rj3uoo4altgjsq6tpqm48ovqr69i3ki0.apps.googleusercontent.com'),
   // ]);
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(
+      child: MyApp(),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState()=> _MyAppState();
+}
+
+class _MyAppState extends ConsumerState<MyApp>{
   @override
   Widget build(BuildContext context) {
+    final router = ref.watch(goRouterProvider);
     return MaterialApp.router(
+      routeInformationParser: router.routeInformationParser,
+      routeInformationProvider: router.routeInformationProvider,
+      routerDelegate: router.routerDelegate,
       debugShowCheckedModeBanner: false,
-      routerConfig: _router,
       title: "Skeleton",
     );
   }
-}
 
-final GoRouter _router = GoRouter(
-  routes: [
-    GoRoute(
-      name: "Login",
-      path: "/",
-      builder: (context, state) => const LoginPage(),
-      routes: [
-        GoRoute(
-          name: 'Home',
-          path: 'home',
-          pageBuilder: (context, state) {
-            // TODO Try to find a way to move these CustomTransitionPage calls
-            // TODO to my own class that can be responsive/adaptive.  I want
-            // TODO the below behavior when in a web browser, but am fine with
-            // TODO the default transition animations for native apps.
-            // TODO but for now, I can deal with the extra code.
-            return CustomTransitionPage<void>(
-              key: state.pageKey,
-              child: const HomePage(),
-              transitionDuration: const Duration(milliseconds: 0),
-              transitionsBuilder: (BuildContext context,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                  Widget child) {
-                return FadeTransition(
-                  opacity:
-                  CurveTween(curve: Curves.easeInOut).animate(animation),
-                  child: child,
-                );
-              },
-            );
-          },
-        ),
-        GoRoute(
-          name: 'Profile',
-          path: 'profile',
-          pageBuilder: (context, state) {
-            return CustomTransitionPage<void>(
-              key: state.pageKey,
-              child: const ProfilePage(),
-              transitionDuration: const Duration(milliseconds: 0),
-              transitionsBuilder: (BuildContext context,
-                  Animation<double> animation,
-                  Animation<double> secondaryAnimation,
-                  Widget child) {
-                return FadeTransition(
-                  opacity:
-                  CurveTween(curve: Curves.easeInOut).animate(animation),
-                  child: child,
-                );
-              },
-            );
-          },
-        ),
-      ],
-    ),
-  ],
-);
+}
+// final GoRouter _router = GoRouter(
+//   // redirect: (BuildContext context, GoRouterState state) {
+//   //   if (authStateProvider.isLoggeIn()) {
+//   //     return '/';
+//   //   } else {
+//   //     return 'home';
+//   //   }
+//   // },
+//   routes: [
+//     GoRoute(
+//       name: "Login",
+//       path: "/",
+//       builder: (context, state) => const LoginPage(),
+//       routes: [
+//         GoRoute(
+//           name: 'Home',
+//           path: 'home',
+//           pageBuilder: (context, state) {
+//             // TODO Try to find a way to move these CustomTransitionPage calls
+//             // TODO to my own class that can be responsive/adaptive.  I want
+//             // TODO the below behavior when in a web browser, but am fine with
+//             // TODO the default transition animations for native apps.
+//             // TODO but for now, I can deal with the extra code.
+//             return CustomTransitionPage<void>(
+//               key: state.pageKey,
+//               child: const HomePage(),
+//               transitionDuration: const Duration(milliseconds: 0),
+//               transitionsBuilder: (BuildContext context,
+//                   Animation<double> animation,
+//                   Animation<double> secondaryAnimation,
+//                   Widget child) {
+//                 return FadeTransition(
+//                   opacity:
+//                       CurveTween(curve: Curves.easeInOut).animate(animation),
+//                   child: child,
+//                 );
+//               },
+//             );
+//           },
+//         ),
+//         GoRoute(
+//           name: 'Profile',
+//           path: 'profile',
+//           pageBuilder: (context, state) {
+//             return CustomTransitionPage<void>(
+//               key: state.pageKey,
+//               child: const ProfilePage(),
+//               transitionDuration: const Duration(milliseconds: 0),
+//               transitionsBuilder: (BuildContext context,
+//                   Animation<double> animation,
+//                   Animation<double> secondaryAnimation,
+//                   Widget child) {
+//                 return FadeTransition(
+//                   opacity:
+//                       CurveTween(curve: Curves.easeInOut).animate(animation),
+//                   child: child,
+//                 );
+//               },
+//             );
+//           },
+//         ),
+//       ],
+//     ),
+//   ],
+// );

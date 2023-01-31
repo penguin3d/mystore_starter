@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../providers/authstatenotifier.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -16,10 +19,12 @@ class HomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-              onPressed: () => context.goNamed('Login'),
-              child: const Text('Logout'),
-            ),
+            Consumer(builder: (context, ref, child) {
+              return ElevatedButton(
+                onPressed: () => ref.read(authStateProvider.notifier).logOut(context),
+                child: const Text('Logout'),
+              );
+            }),
             const SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () => context.goNamed('Profile'),

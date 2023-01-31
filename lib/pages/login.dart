@@ -1,7 +1,10 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystore_starter/main.dart';
+
+import '../providers/authstatenotifier.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,9 +16,12 @@ class LoginPage extends StatelessWidget {
         automaticallyImplyLeading: false,
         title: const Text("Sign In"),
       ),
-      body: Center(
-        child: ElevatedButton(onPressed: ()=>context.goNamed('Home'),child: const Text('Login'),),
-      )
+      body: Consumer(builder:(context, ref, child){
+        return Center(
+          child: ElevatedButton(onPressed: ()=>ref.read(authStateProvider.notifier).logIn(context),child: const Text('Login'),),
+        );
+      })
+
         // SignInScreen(
         //   actions: [
         //             AuthStateChangeAction(((context, state) {
