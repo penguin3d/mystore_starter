@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'bottom_navigation_bar.dart';
+import 'widgets/bottom_navigation_bar.dart';
 
 class DashBoardScreen extends StatefulWidget {
   final Widget child;

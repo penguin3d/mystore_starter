@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystore_starter/features/cart/presentation/ui/cart_screen.dart';
-import 'package:mystore_starter/features/dashboard/presentation/ui/widgets/dashboard_screen.dart';
+import 'package:mystore_starter/features/dashboard/presentation/ui/dashboard_screen.dart';
 import 'package:mystore_starter/features/home/presentation/ui/home_screen.dart';
 import 'package:mystore_starter/features/product/presentation/ui/prduct_detail.dart';
 import 'package:mystore_starter/features/settings/presentation/ui/settings_screen.dart';
