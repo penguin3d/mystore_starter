@@ -4,9 +4,12 @@ import 'package:go_router/go_router.dart';
 import 'package:mystore_starter/features/cart/presentation/ui/cart_screen.dart';
 import 'package:mystore_starter/features/dashboard/presentation/ui/widgets/dashboard_screen.dart';
 import 'package:mystore_starter/features/home/presentation/ui/home_screen.dart';
+import 'package:mystore_starter/features/product/presentation/ui/prduct_detail.dart';
 import 'package:mystore_starter/features/settings/presentation/ui/settings_screen.dart';
-import 'package:mystore_starter/pages/home.dart';
+import 'package:mystore_starter/pages/root.dart';
+import 'package:mystore_starter/routes/go_router_notifier.dart';
 
+import '../pages/login.dart';
 import 'named_routes.dart';
 import '../pages/error.dart';
 import '../pages/profile.dart';
@@ -16,15 +19,41 @@ final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  bool isDuplicate = false;
+
+  final notifier = ref.read(goRouterNotifierProvider);
   return GoRouter(
     navigatorKey: _rootNavigator,
-    initialLocation: '/',
+    initialLocation: '/login',
+    refreshListenable: notifier,
+    redirect: (context, state) {
+      final isLoggedIn = notifier.isLoggedIn;
+      final isGoingToLogin = state.subloc == '/login';
+      if(!isLoggedIn && !isGoingToLogin && !isDuplicate){
+        isDuplicate = true;
+        return '/login';
+      }
+      if(isLoggedIn && isGoingToLogin && !isDuplicate){
+        isDuplicate = true;
+        return '/home';
+      }
+      if(isDuplicate){
+        isDuplicate = false;
+      }
+      return null;
+    },
     routes: [
       GoRoute(
-          path: '/home',
+          path: '/',
           name: root,
           pageBuilder: (context, state) {
-            return NoTransitionPage(child: HomePage(key: state.pageKey));
+            return NoTransitionPage(child: RootPage(key: state.pageKey));
+          }),
+      GoRoute(
+          path: '/login',
+          name: login,
+          pageBuilder: (context, state) {
+            return NoTransitionPage(child: LoginPage(key: state.pageKey));
           }),
       ShellRoute(
         navigatorKey: _shellNavigator,
@@ -32,26 +61,44 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             DashBoardScreen(key: state.pageKey, child: child),
         routes: [
           GoRoute(
-              path: '/',
-              name: cart,
-              pageBuilder: (context, state) {
-                return NoTransitionPage(child: HomeScreen(key: state.pageKey),);
-              }
+            path: '/home',
+            name: home,
+            pageBuilder: (context, state) {
+              return NoTransitionPage(
+                child: HomeScreen(key: state.pageKey),
+              );
+            },
+            routes: [
+              GoRoute(
+                  path: 'productDetail/:id',
+                  name: productDetail,
+                  pageBuilder: (context, state) {
+                    final id = state.params['id'].toString();
+                    return NoTransitionPage(
+                      child: ProductDetailScreen(
+                        key: state.pageKey,
+                        id: int.parse(id),
+                      ),
+                    );
+                  }),
+            ],
           ),
           GoRoute(
               path: '/cart',
-              name: settings,
+              name: cart,
               pageBuilder: (context, state) {
-                return NoTransitionPage(child: CartScreen(key: state.pageKey),);
-              }
-          ),
+                return NoTransitionPage(
+                  child: CartScreen(key: state.pageKey),
+                );
+              }),
           GoRoute(
               path: '/settings',
-              name: home,
+              name: settings,
               pageBuilder: (context, state) {
-                return NoTransitionPage(child: SettingsScreen(key: state.pageKey),);
-              }
-          ),
+                return NoTransitionPage(
+                  child: SettingsScreen(key: state.pageKey),
+                );
+              }),
         ],
       )
     ],

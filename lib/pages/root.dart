@@ -4,8 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../providers/authstatenotifier.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class RootPage extends StatelessWidget {
+  const RootPage({super.key});
 
   @override
   Widget build(BuildContext context) {

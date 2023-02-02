@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mystore_starter/main.dart';
+import 'package:mystore_starter/routes/go_router_notifier.dart';
 
-import '../providers/authstatenotifier.dart';
+
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -14,11 +15,13 @@ class LoginPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Sign In"),
+        title: const Text("Log In"),
       ),
       body: Consumer(builder:(context, ref, child){
         return Center(
-          child: ElevatedButton(onPressed: ()=>ref.read(authStateProvider.notifier).logIn(context),child: const Text('Login'),),
+          child: ElevatedButton(onPressed: () {
+            ref.read(goRouterNotifierProvider).isLoggedIn = true;
+          },child: const Text('Login'),),
         );
       })
 
