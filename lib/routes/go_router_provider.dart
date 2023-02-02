@@ -1,41 +1,59 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mystore_starter/features/cart/presentation/ui/cart_screen.dart';
-import 'package:mystore_starter/features/dashboard/presentation/ui/widgets/dashboard_screen.dart';
-import 'package:mystore_starter/features/home/presentation/ui/home_screen.dart';
-import 'package:mystore_starter/features/product/presentation/ui/prduct_detail.dart';
-import 'package:mystore_starter/features/settings/presentation/ui/settings_screen.dart';
-import 'package:mystore_starter/pages/root.dart';
+import 'package:mystore_starter/bottom_nav/pages/classes_screen.dart';
+
+import 'package:mystore_starter/bottom_nav/pages/shop_screen.dart';
+import 'package:mystore_starter/bottom_nav/pages/product_detail.dart';
+import 'package:mystore_starter/bottom_nav/pages/news_screen.dart';
+
 import 'package:mystore_starter/routes/go_router_notifier.dart';
 
-import '../pages/login.dart';
-import 'named_routes.dart';
-import '../pages/error.dart';
-import '../pages/profile.dart';
+import '../bottom_nav/pages/bottom_nav_screen.dart';
+import '../root_pages/login.dart';
+
+import '../root_pages/error.dart';
+import '../root_pages/profile.dart';
+import '../root_pages/root.dart';
 
 final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
 
 final goRouterProvider = Provider<GoRouter>((ref) {
+  // The below redirect gets triggered twice
+  // I am not sure why that happens, but I
+  // Saw this in a tutorial to ensure that we
+  // only set the new route once.
   bool isDuplicate = false;
 
   final notifier = ref.read(goRouterNotifierProvider);
+
   return GoRouter(
     navigatorKey: _rootNavigator,
     initialLocation: '/login',
     refreshListenable: notifier,
     redirect: (context, state) {
+
+      //Capture the notifier value that has brought us here
       final isLoggedIn = notifier.isLoggedIn;
+
+      //Check if we are at the login screen
       final isGoingToLogin = state.subloc == '/login';
+
+
+      // if we are not logged in and login wasn't the current page
+      // then we were brought here by a sign OUT event
       if(!isLoggedIn && !isGoingToLogin && !isDuplicate){
         isDuplicate = true;
         return '/login';
       }
+
+      // if we are logged in and login was the current page
+      // then we were brought here by a sign IN event
       if(isLoggedIn && isGoingToLogin && !isDuplicate){
         isDuplicate = true;
-        return '/home';
+        return '/shop';
       }
       if(isDuplicate){
         isDuplicate = false;
@@ -45,33 +63,39 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(
           path: '/',
-          name: root,
+          name: 'root',
           pageBuilder: (context, state) {
             return NoTransitionPage(child: RootPage(key: state.pageKey));
           }),
       GoRoute(
-          path: '/login',
-          name: login,
+          path: '/profile',
+          name: 'profile',
           pageBuilder: (context, state) {
-            return NoTransitionPage(child: LoginPage(key: state.pageKey));
+            return NoTransitionPage(child: ProfilePage(key: state.pageKey));
+          }),
+      GoRoute(
+          path: '/login',
+          name: 'login',
+          builder: (context, state) {
+            return LoginPage(key: state.pageKey);
           }),
       ShellRoute(
         navigatorKey: _shellNavigator,
         builder: (context, state, child) =>
-            DashBoardScreen(key: state.pageKey, child: child),
+            BottomNavScreen(key: state.pageKey, child: child),
         routes: [
           GoRoute(
-            path: '/home',
-            name: home,
+            path: '/shop',
+            name: 'shop',
             pageBuilder: (context, state) {
               return NoTransitionPage(
-                child: HomeScreen(key: state.pageKey),
+                child: ShopScreen(key: state.pageKey),
               );
             },
             routes: [
               GoRoute(
                   path: 'productDetail/:id',
-                  name: productDetail,
+                  name: 'productDetail',
                   pageBuilder: (context, state) {
                     final id = state.params['id'].toString();
                     return NoTransitionPage(
@@ -84,25 +108,24 @@ final goRouterProvider = Provider<GoRouter>((ref) {
             ],
           ),
           GoRoute(
-              path: '/cart',
-              name: cart,
+              path: '/classes',
+              name: 'classes',
               pageBuilder: (context, state) {
                 return NoTransitionPage(
-                  child: CartScreen(key: state.pageKey),
+                  child: ClassesScreen(key: state.pageKey),
                 );
               }),
           GoRoute(
-              path: '/settings',
-              name: settings,
+              path: '/news',
+              name: 'news',
               pageBuilder: (context, state) {
                 return NoTransitionPage(
-                  child: SettingsScreen(key: state.pageKey),
+                  child: NewsScreen(key: state.pageKey),
                 );
               }),
         ],
       )
     ],
-    // ToDo implement an Error Page
     errorBuilder: (context, state) => ErrorPage(
       errorMsg: state.error.toString(),
       key: state.pageKey,

@@ -51,7 +51,7 @@ class _MyAppState extends ConsumerState<MyApp>{
       routeInformationProvider: router.routeInformationProvider,
       routerDelegate: router.routerDelegate,
       debugShowCheckedModeBanner: false,
-      title: "Skeleton",
+      title: "Skeleton Shop App",
     );
   }
 

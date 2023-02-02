@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mystore_starter/features/dashboard/presentation/controller/dashboard_controller.dart';
+
+import '../controller/bottom_nav_controller.dart';
 
 class BottomNavigationWidget extends ConsumerStatefulWidget {
   const BottomNavigationWidget({Key? key}) : super(key: key);
@@ -20,17 +21,17 @@ class _BottomNavigationWidgetState extends ConsumerState<BottomNavigationWidget>
         onTap: (value) => _onTap(value),
         items: const [
       BottomNavigationBarItem(
-          activeIcon: Icon(Icons.home),
-          icon: Icon(Icons.home_outlined),
-      label: 'Home'),
+          activeIcon: Icon(Icons.store),
+          icon: Icon(Icons.store_outlined),
+      label: 'Store'),
       BottomNavigationBarItem(
-          activeIcon: Icon(Icons.shopping_bag),
-          icon: Icon(Icons.shopping_bag_outlined),
-          label: 'Cart'),
+          activeIcon: Icon(Icons.calendar_month),
+          icon: Icon(Icons.calendar_month_outlined),
+          label: 'Classes'),
       BottomNavigationBarItem(
-          activeIcon: Icon(Icons.settings),
-          icon: Icon(Icons.settings_outlined),
-          label: 'Settings'),
+          activeIcon: Icon(Icons.tv),
+          icon: Icon(Icons.tv_outlined),
+          label: 'News'),
 
 
     ]);
@@ -39,13 +40,13 @@ class _BottomNavigationWidgetState extends ConsumerState<BottomNavigationWidget>
     ref.read(dashboardControllerProvider.notifier).setPosition(index);
     switch(index){
       case 0:
-        context.go('/home');
+        context.go('/shop');
         break;
       case 1:
-        context.go('/cart');
+        context.go('/classes');
         break;
       case 2:
-        context.go('/settings');
+        context.go('/news');
         break;
   default:
     }

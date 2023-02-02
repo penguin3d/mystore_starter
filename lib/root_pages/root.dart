@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-
-import '../providers/authstatenotifier.dart';
+import 'package:mystore_starter/routes/go_router_notifier.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -12,7 +11,7 @@ class RootPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text('Home'),
+        title: const Text('Root'),
       ),
       body: Center(
         child: Column(
@@ -21,14 +20,15 @@ class RootPage extends StatelessWidget {
           children: [
             Consumer(builder: (context, ref, child) {
               return ElevatedButton(
-                onPressed: () => ref.read(authStateProvider.notifier).logOut(context),
-                child: const Text('Logout'),
+                onPressed: () =>
+                    ref.read(goRouterNotifierProvider).isLoggedIn = false,
+                child: const Text('Sign Out'),
               );
             }),
             const SizedBox(height: 10),
             ElevatedButton(
-                onPressed: () => context.goNamed('Profile'),
-                child: const Text('Go to Profile'))
+                onPressed: () => context.goNamed('profile'),
+                child: const Text('Go to Profile')),
           ],
         ),
       ),
