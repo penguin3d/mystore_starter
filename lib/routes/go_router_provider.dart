@@ -20,7 +20,7 @@ final GlobalKey<NavigatorState> _rootNavigator = GlobalKey(debugLabel: 'root');
 final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
 
-final goRouterProvider = Provider<GoRouter>((ref) {
+final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
   // The below redirect gets triggered twice
   // I am not sure why that happens, but I
   // Saw this in a tutorial to ensure that we
@@ -33,8 +33,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigator,
     initialLocation: '/login',
     refreshListenable: notifier,
-    redirect: (context, state) {
-
+    redirect: (context, GoRouterState state) {
+      print('Checkpoint A');
       //Capture the notifier value that has brought us here
       final isLoggedIn = notifier.isLoggedIn;
 
@@ -45,6 +45,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       // if we are not logged in and login wasn't the current page
       // then we were brought here by a sign OUT event
       if(!isLoggedIn && !isGoingToLogin && !isDuplicate){
+        print('Checkpoint B');
         isDuplicate = true;
         return '/login';
       }
@@ -52,10 +53,12 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       // if we are logged in and login was the current page
       // then we were brought here by a sign IN event
       if(isLoggedIn && isGoingToLogin && !isDuplicate){
+        print('Checkpoint C');
         isDuplicate = true;
         return '/shop';
       }
       if(isDuplicate){
+        print('Checkpoint D');
         isDuplicate = false;
       }
       return null;

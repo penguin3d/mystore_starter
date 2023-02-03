@@ -2,25 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mystore_starter/routes/go_router_notifier.dart';
 
-
-
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: const Text("Log In"),
-      ),
-      body: Consumer(builder:(context, ref, child){
-        return Center(
-          child: ElevatedButton(onPressed: () {
-            ref.read(goRouterNotifierProvider).isLoggedIn = true;
-          },child: const Text('Login'),),
-        );
-      })
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: const Text("Log In"),
+        ),
+        body: Consumer(builder: (context, ref, child) {
+          return Stack(
+            children: [
+              ColorFiltered(
+              colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1),
+              BlendMode.dstIn,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            '3d-casual-life-fingerprint-blockchain.png'),
+                        fit: BoxFit.cover)),
+              ),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    ref.read(goRouterNotifierProvider).isLoggedIn = true;
+                  },
+                  child: const Text('Login'),
+                ),
+              ),
+            ],
+          );
+        })
 
         // SignInScreen(
         //   actions: [
@@ -47,6 +65,6 @@ class LoginPage extends StatelessWidget {
         //     })),
         //   ],
         // ),
-    );
+        );
   }
 }
