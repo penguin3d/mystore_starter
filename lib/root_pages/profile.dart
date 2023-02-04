@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutterfire_ui/auth.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-import '../routes/go_router_notifier.dart';
+import '../routes/auth_notifier.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -18,14 +20,17 @@ class ProfilePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Consumer(builder:(context, ref, child){
+            Consumer(builder: (context, ref, child) {
               return Center(
-                child: ElevatedButton(onPressed: () {
-                  ref.read(goRouterNotifierProvider).isLoggedIn =false;
-                },child: const Text('Sign Out'),),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    // ref.read(goRouterNotifierProvider).isLoggedIn = false;
+                    await FirebaseAuth.instance.signOut();
+                  },
+                  child: const Text('Sign Out'),
+                ),
               );
             }),
-
             const SizedBox(height: 10),
             ElevatedButton(
                 onPressed: () => context.goNamed('root'),

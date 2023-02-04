@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mystore_starter/routes/go_router_notifier.dart';
+import 'package:mystore_starter/routes/auth_notifier.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class RootPage extends StatelessWidget {
   const RootPage({super.key});
@@ -20,8 +21,10 @@ class RootPage extends StatelessWidget {
           children: [
             Consumer(builder: (context, ref, child) {
               return ElevatedButton(
-                onPressed: () =>
-                    ref.read(goRouterNotifierProvider).isLoggedIn = false,
+                onPressed: () async {
+                  // ref.read(goRouterNotifierProvider).isLoggedIn = false;
+                  await FirebaseAuth.instance.signOut();
+                  },
                 child: const Text('Sign Out'),
               );
             }),

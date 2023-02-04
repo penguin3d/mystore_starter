@@ -1,14 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:mystore_starter/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:mystore_starter/bottom_nav/pages/classes_screen.dart';
 
 import 'package:mystore_starter/bottom_nav/pages/shop_screen.dart';
 import 'package:mystore_starter/bottom_nav/pages/product_detail.dart';
 import 'package:mystore_starter/bottom_nav/pages/news_screen.dart';
 
-import 'package:mystore_starter/routes/go_router_notifier.dart';
+import 'package:mystore_starter/routes/auth_notifier.dart';
 
 import '../bottom_nav/pages/bottom_nav_screen.dart';
 import '../root_pages/login.dart';
@@ -23,29 +24,28 @@ final GlobalKey<NavigatorState> _shellNavigator =
 
 final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
 
-  final notifier = ref.read(goRouterNotifierProvider);
-
+  final authState = ref.watch(authProvider);
   return GoRouter(
     navigatorKey: _rootNavigator,
     initialLocation: '/login',
-    refreshListenable: notifier,
+    // refreshListenable: notifier,
     redirect: (context, GoRouterState state) {
-      print('Checkpoint A');
       //Capture the notifier value that has brought us here
-      final isLoggedIn = notifier.isLoggedIn;
+      final isLoggedIn = authState.valueOrNull != null;
 
       //Check if we are at the login screen
       final isGoingToLogin = state.subloc == '/login';
 
+
       // if we are not logged in and login wasn't the current page
       // then we were brought here by a sign OUT event
-      if (!isLoggedIn && !isGoingToLogin) {
+      if(!isLoggedIn && !isGoingToLogin){
         return '/login';
       }
 
       // if we are logged in and login was the current page
       // then we were brought here by a sign IN event
-      if (isLoggedIn && isGoingToLogin) {
+      if(isLoggedIn && isGoingToLogin){
         return '/shop';
       }
 
@@ -62,7 +62,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
           path: '/profile',
           name: 'profile',
           pageBuilder: (context, state) {
-            return NoTransitionPage(child: ProfilePage(key: state.pageKey));
+            return NoTransitionPage(child: ProfileScreen(key: state.pageKey));
           }),
       GoRoute(
           path: '/login',
@@ -79,15 +79,6 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
             path: '/shop',
             name: 'shop',
             pageBuilder: (context, state) {
-              // If we navigate away from the bottom nav and return,
-              // the active icon may not match this route.
-              // The below setPosition addresses this by setting the bottom
-              // nav index to be the index for the shop
-              // The Future ensures that we do not do this when the widget
-              // tree is being rebuilt. "Don't cross the streams"
-              Future(() {
-                ref.read(bottomNavControllerProvider.notifier).setPosition(0);
-              });
               return NoTransitionPage(
                 child: ShopScreen(key: state.pageKey),
               );

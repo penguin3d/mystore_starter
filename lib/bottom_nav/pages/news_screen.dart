@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-import '../../routes/go_router_notifier.dart';
+import '../../routes/auth_notifier.dart';
 
 class NewsScreen extends StatefulWidget {
   const NewsScreen({Key? key}) : super(key: key);
@@ -34,8 +36,9 @@ class _NewsScreenState extends State<NewsScreen> {
               ),
             ),
             Center(
-              child: ElevatedButton(onPressed: () {
-                ref.read(goRouterNotifierProvider).isLoggedIn =false;
+              child: ElevatedButton(onPressed: () async {
+                // ref.read(goRouterNotifierProvider).isLoggedIn = false;
+                await FirebaseAuth.instance.signOut();
               },child: const Text('Sign Out'),),
             ),
           ],

@@ -44,39 +44,39 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    authDomain: '',
-    storageBucket: '',
+    apiKey: 'AIzaSyD445392PibNJhyus8eRicg1laafnCzRuQ',
+    appId: '1:404767129554:web:cd24a063385d22adc4120b',
+    messagingSenderId: '404767129554',
+    projectId: 'flutter-starter-dfcdc',
+    authDomain: 'flutter-starter-dfcdc.firebaseapp.com',
+    storageBucket: 'flutter-starter-dfcdc.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    storageBucket: '',
+    apiKey: 'AIzaSyAmZXDiyPImXwPiocJ1joqrMwMWpRwvjEc',
+    appId: '1:404767129554:android:04f5d2002b3fd3b5c4120b',
+    messagingSenderId: '404767129554',
+    projectId: 'flutter-starter-dfcdc',
+    storageBucket: 'flutter-starter-dfcdc.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    storageBucket: '',
-    iosClientId: '',
-    iosBundleId: '',
+    apiKey: 'AIzaSyB5vQEjVrmzpnrWfdNnK-5BMp1tBrmRcYc',
+    appId: '1:404767129554:ios:2be47dc9b5351994c4120b',
+    messagingSenderId: '404767129554',
+    projectId: 'flutter-starter-dfcdc',
+    storageBucket: 'flutter-starter-dfcdc.appspot.com',
+    iosClientId: '404767129554-4vv5v1apcb1v1hblr99744bqkqkvn08b.apps.googleusercontent.com',
+    iosBundleId: 'com.example.mystoreStarter',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: '',
-    appId: '',
-    messagingSenderId: '',
-    projectId: '',
-    storageBucket: '',
-    iosClientId: '',
-    iosBundleId: '',
+    apiKey: 'AIzaSyB5vQEjVrmzpnrWfdNnK-5BMp1tBrmRcYc',
+    appId: '1:404767129554:ios:2be47dc9b5351994c4120b',
+    messagingSenderId: '404767129554',
+    projectId: 'flutter-starter-dfcdc',
+    storageBucket: 'flutter-starter-dfcdc.appspot.com',
+    iosClientId: '404767129554-4vv5v1apcb1v1hblr99744bqkqkvn08b.apps.googleusercontent.com',
+    iosBundleId: 'com.example.mystoreStarter',
   );
 }
