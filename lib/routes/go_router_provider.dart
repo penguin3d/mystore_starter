@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:mystore_starter/bottom_nav/controller/bottom_nav_controller.dart';
 import 'package:mystore_starter/bottom_nav/pages/classes_screen.dart';
 
 import 'package:mystore_starter/bottom_nav/pages/shop_screen.dart';
@@ -41,10 +42,9 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
       //Check if we are at the login screen
       final isGoingToLogin = state.subloc == '/login';
 
-
       // if we are not logged in and login wasn't the current page
       // then we were brought here by a sign OUT event
-      if(!isLoggedIn && !isGoingToLogin && !isDuplicate){
+      if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
         print('Checkpoint B');
         isDuplicate = true;
         return '/login';
@@ -52,12 +52,12 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
 
       // if we are logged in and login was the current page
       // then we were brought here by a sign IN event
-      if(isLoggedIn && isGoingToLogin && !isDuplicate){
+      if (isLoggedIn && isGoingToLogin && !isDuplicate) {
         print('Checkpoint C');
         isDuplicate = true;
         return '/shop';
       }
-      if(isDuplicate){
+      if (isDuplicate) {
         print('Checkpoint D');
         isDuplicate = false;
       }
@@ -91,6 +91,15 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
             path: '/shop',
             name: 'shop',
             pageBuilder: (context, state) {
+              // If we navigate away from the bottom nav and return,
+              // the active icon may not match this route.
+              // The below setPosition addresses this by setting the bottom
+              // nav index to be the index for the shop
+              // The Future ensures that we do not do this when the widget
+              // tree is being rebuilt. "Don't cross the streams"
+              Future(() {
+                ref.read(bottomNavControllerProvider.notifier).setPosition(0);
+               });
               return NoTransitionPage(
                 child: ShopScreen(key: state.pageKey),
               );

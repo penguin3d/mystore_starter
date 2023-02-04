@@ -17,13 +17,30 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         title: const Text('Product Detail'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Product Detail : ${widget.id}'),
-          ],
-        ),
+      body: Stack(
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1),
+              BlendMode.dstIn,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          'casual-life-3d-young-man-online-shopping-for-sneakers-on-his-smartphone.png'),
+                      fit: BoxFit.cover)),
+            ),
+          ),
+          Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Product Detail : ${widget.id}'),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

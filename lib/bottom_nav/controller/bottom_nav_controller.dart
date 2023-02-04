@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final dashboardControllerProvider = StateNotifierProvider<DashboardController, int>((ref){
-  return DashboardController(0);
+final bottomNavControllerProvider = StateNotifierProvider<BottomNavController, int>((ref){
+  return BottomNavController(0);
 });
 
-class DashboardController extends StateNotifier<int> {
-  DashboardController(super.state);
+class BottomNavController extends StateNotifier<int> {
+  BottomNavController(super.state);
 
   void setPosition(int value) {
     state = value;

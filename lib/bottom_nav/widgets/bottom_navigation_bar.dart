@@ -15,7 +15,7 @@ class _BottomNavigationWidgetState extends ConsumerState<BottomNavigationWidget>
 
   @override
   Widget build(BuildContext context) {
-    final position = ref.watch(dashboardControllerProvider);
+    final position = ref.watch(bottomNavControllerProvider);
     return BottomNavigationBar(
         currentIndex: position,
         onTap: (value) => _onTap(value),
@@ -37,7 +37,7 @@ class _BottomNavigationWidgetState extends ConsumerState<BottomNavigationWidget>
     ]);
   }
   void _onTap(int index){
-    ref.read(dashboardControllerProvider.notifier).setPosition(index);
+    ref.read(bottomNavControllerProvider.notifier).setPosition(index);
     switch(index){
       case 0:
         context.go('/shop');

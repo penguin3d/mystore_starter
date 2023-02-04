@@ -14,8 +14,26 @@ class _ClassesScreenState extends State<ClassesScreen> {
       appBar: AppBar(
         title: const Text('Classes'),
       ),
-      body: const Center(
-        child: Text('Classes Screen of Bottom Nav'),
+      body: Stack(
+
+        children: [
+          ColorFiltered(
+            colorFilter: ColorFilter.mode(
+              Colors.white.withOpacity(0.1),
+              BlendMode.dstIn,
+            ),
+            child: Container(
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage(
+                          '3d-casual-life-clock-and-calendar.png'),
+                      fit: BoxFit.cover)),
+            ),
+          ),
+          const Center(
+            child: Text('Classes Screen of Bottom Nav'),
+          ),
+        ],
       ),
     );
   }

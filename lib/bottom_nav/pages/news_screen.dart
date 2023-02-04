@@ -18,10 +18,27 @@ class _NewsScreenState extends State<NewsScreen> {
         title: const Text('News Page'),
       ),
       body: Consumer(builder:(context, ref, child){
-        return Center(
-          child: ElevatedButton(onPressed: () {
-            ref.read(goRouterNotifierProvider).isLoggedIn =false;
-          },child: const Text('Sign Out'),),
+        return Stack(
+          children: [
+            ColorFiltered(
+              colorFilter: ColorFilter.mode(
+                Colors.white.withOpacity(0.1),
+                BlendMode.dstIn,
+              ),
+              child: Container(
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage(
+                            'casual-life-3d-planet-earth-3.png'),
+                        fit: BoxFit.cover)),
+              ),
+            ),
+            Center(
+              child: ElevatedButton(onPressed: () {
+                ref.read(goRouterNotifierProvider).isLoggedIn =false;
+              },child: const Text('Sign Out'),),
+            ),
+          ],
         );
       })
     );
