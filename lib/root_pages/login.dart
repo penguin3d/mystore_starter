@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mystore_starter/routes/go_router_notifier.dart';
@@ -28,13 +29,7 @@ class LoginPage extends StatelessWidget {
                         fit: BoxFit.cover)),
               ),
               ),
-              Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    ref.read(goRouterNotifierProvider).isLoggedIn = true;
-                  },
-                  child: const Text('Login'),
-                ),
+              const SignInScreen(
               ),
             ],
           );

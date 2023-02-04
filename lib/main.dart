@@ -4,13 +4,13 @@ import 'dart:async';
 // TODO the dummy implementation of routing and state management are working
 // TODO to properly deal with routing and auth state changes, along with
 // TODO any other state changes
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart'
-//     hide EmailAuthProvider, PhoneAuthProvider;
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:firebase_ui_auth/firebase_ui_auth.dart';
-// import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
-// import 'firebase_options.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart'
+    hide EmailAuthProvider, PhoneAuthProvider;
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,14 +20,15 @@ import 'package:url_strategy/url_strategy.dart';
 Future<void> main() async {
   setPathUrlStrategy();
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  //
-  // FirebaseUIAuth.configureProviders([
-  //   EmailAuthProvider(),
-  //   GoogleProvider(
-  //       clientId:
-  //           '404767129554-rj3uoo4altgjsq6tpqm48ovqr69i3ki0.apps.googleusercontent.com'),
-  // ]);
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  FirebaseUIAuth.configureProviders([
+    EmailAuthProvider(),
+    GoogleProvider(
+        clientId:
+            '404767129554-rj3uoo4altgjsq6tpqm48ovqr69i3ki0.apps.googleusercontent.com'),
+  ]);
+
   runApp(
     const ProviderScope(
       child: MyApp(),

@@ -22,11 +22,6 @@ final GlobalKey<NavigatorState> _shellNavigator =
     GlobalKey(debugLabel: 'shell');
 
 final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
-  // The below redirect gets triggered twice
-  // I am not sure why that happens, but I
-  // Saw this in a tutorial to ensure that we
-  // only set the new route once.
-  bool isDuplicate = false;
 
   final notifier = ref.read(goRouterNotifierProvider);
 
@@ -44,23 +39,16 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
 
       // if we are not logged in and login wasn't the current page
       // then we were brought here by a sign OUT event
-      if (!isLoggedIn && !isGoingToLogin && !isDuplicate) {
-        print('Checkpoint B');
-        isDuplicate = true;
+      if (!isLoggedIn && !isGoingToLogin) {
         return '/login';
       }
 
       // if we are logged in and login was the current page
       // then we were brought here by a sign IN event
-      if (isLoggedIn && isGoingToLogin && !isDuplicate) {
-        print('Checkpoint C');
-        isDuplicate = true;
+      if (isLoggedIn && isGoingToLogin) {
         return '/shop';
       }
-      if (isDuplicate) {
-        print('Checkpoint D');
-        isDuplicate = false;
-      }
+
       return null;
     },
     routes: [
@@ -99,7 +87,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
               // tree is being rebuilt. "Don't cross the streams"
               Future(() {
                 ref.read(bottomNavControllerProvider.notifier).setPosition(0);
-               });
+              });
               return NoTransitionPage(
                 child: ShopScreen(key: state.pageKey),
               );
