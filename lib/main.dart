@@ -23,10 +23,10 @@ Future<void> main() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
   FirebaseUIAuth.configureProviders([
-    EmailAuthProvider(),
+    EmailAuthProvider(
+    ),
     GoogleProvider(
-        clientId:
-            '404767129554-rj3uoo4altgjsq6tpqm48ovqr69i3ki0.apps.googleusercontent.com'),
+        clientId: clientID),
   ]);
 
   runApp(
@@ -40,10 +40,10 @@ class MyApp extends ConsumerStatefulWidget {
   const MyApp({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState()=> _MyAppState();
+  ConsumerState<ConsumerStatefulWidget> createState() => _MyAppState();
 }
 
-class _MyAppState extends ConsumerState<MyApp>{
+class _MyAppState extends ConsumerState<MyApp> {
   @override
   Widget build(BuildContext context) {
     final router = ref.watch(goRouterProvider);
@@ -53,9 +53,49 @@ class _MyAppState extends ConsumerState<MyApp>{
       routerDelegate: router.routerDelegate,
       debugShowCheckedModeBanner: false,
       title: "Skeleton Shop App",
+      theme: ThemeData(
+        inputDecorationTheme: InputDecorationTheme(
+          // fillColor: Colors.white,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+      //   outlinedButtonTheme: OutlinedButtonThemeData(
+      //     style: ButtonStyle(
+      //       padding: MaterialStateProperty.all<EdgeInsets>(
+      //         const EdgeInsets.all(24),
+      //       ),
+      //       backgroundColor:
+      //           MaterialStateProperty.all<Color>(Colors.black87),
+      //       foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      //     ),
+      //   ),
+      //   colorScheme: ColorScheme(
+      //     brightness: Brightness.light,
+      //     // App bar and buttons
+      //     primary: Colors.black87,
+      //     onPrimary: Colors.white,
+      //     // This affects the stuff over the bottom nave
+      //     secondary: Colors.black87,
+      //     // Haven't seen this yet
+      //     onSecondary: Colors.red,
+      //     error: Colors.redAccent!,
+      //     onError: Colors.white,
+      //     background: Colors.red,
+      //     onBackground: Colors.blue,
+      //     //
+      //     surface: Colors.red,
+      //     onSurface: Colors.white,
+      //   ),
+      //   bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      //     backgroundColor: Colors.black87,
+      //     selectedItemColor: Colors.white,
+      //     unselectedItemColor: Colors.grey,
+      //   ),
+      //   scaffoldBackgroundColor: Colors.grey[200]!,
+      ),
     );
   }
-
 }
 // final GoRouter _router = GoRouter(
 //   // redirect: (BuildContext context, GoRouterState state) {

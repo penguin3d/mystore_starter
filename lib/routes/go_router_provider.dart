@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -62,7 +61,7 @@ final goRouterProvider = Provider.autoDispose<GoRouter>((ref) {
           path: '/profile',
           name: 'profile',
           pageBuilder: (context, state) {
-            return NoTransitionPage(child: ProfileScreen(key: state.pageKey));
+            return NoTransitionPage(child: ProfilePage(key: state.pageKey));
           }),
       GoRoute(
           path: '/login',

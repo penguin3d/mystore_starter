@@ -1,3 +1,4 @@
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -17,36 +18,33 @@ class _ShopScreenState extends State<ShopScreen> {
       ),
       body: Stack(
         children: [
-          ColorFiltered(
-            colorFilter: ColorFilter.mode(
-              Colors.white.withOpacity(0.1),
-              BlendMode.dstIn,
-            ),
-            child: Container(
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                          '3d-casual-life-online-shopping-2.png'),
-                      fit: BoxFit.cover)),
-            ),
-          ),
-          Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text('Shop Screen'),
-                ElevatedButton.icon(
-                    onPressed: () {
-                      GoRouter.of(context).push('/shop/productDetail/100');
-                    },
-                    icon: const Icon(Icons.next_plan),
-                    label: const Text('Product Detail')),
-                const SizedBox(height: 10),
-                ElevatedButton(
-                    onPressed: () => context.goNamed('profile'),
-                    child: const Text('Go to Profile'))
-              ],
-            ),
+           Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const UserAvatar(),
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Shop Screen'),
+                    ElevatedButton.icon(
+                        onPressed: () {
+                          GoRouter.of(context).push('/shop/productDetail/100');
+                        },
+                        icon: const Icon(Icons.next_plan),
+                        label: const Text('Product Detail')),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                        onPressed: () => context.goNamed('profile'),
+                        child: const Text('Go to Profile')),
+                    const SizedBox(height: 10),
+                    ElevatedButton(
+                        onPressed: () => context.goNamed('root'),
+                        child: const Text('Go to Root'))
+                  ],
+                ),
+              ),
+            ],
           ),
         ],
       ),

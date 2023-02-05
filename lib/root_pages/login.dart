@@ -2,6 +2,12 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mystore_starter/routes/auth_notifier.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_ui_auth/firebase_ui_auth.dart';
+import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
+import 'package:firebase_ui_oauth_apple/firebase_ui_oauth_apple.dart';
+
+import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -15,22 +21,8 @@ class LoginPage extends StatelessWidget {
         ),
         body: Consumer(builder: (context, ref, child) {
           return Stack(
-            children: [
-              ColorFiltered(
-              colorFilter: ColorFilter.mode(
-              Colors.white.withOpacity(0.1),
-              BlendMode.dstIn,
-              ),
-              child: Container(
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage(
-                            '3d-casual-life-fingerprint-blockchain.png'),
-                        fit: BoxFit.cover)),
-              ),
-              ),
-              const SignInScreen(
-              ),
+            children: const [
+              SignInScreen(),
             ],
           );
         })
