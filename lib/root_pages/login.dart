@@ -20,10 +20,43 @@ class LoginPage extends StatelessWidget {
           title: const Text("Log In"),
         ),
         body: Consumer(builder: (context, ref, child) {
-          return Stack(
-            children: const [
-              SignInScreen(),
-            ],
+          return SignInScreen(
+            sideBuilder:  (context, shrinkOffset) {
+              return Padding(
+                padding: const EdgeInsets.only(top: 1000),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.asset('assets/GSC_Huge.png'),
+                ),
+              );
+            },
+            headerBuilder: (context, constraints, shrinkOffset
+                ) {
+              return Padding(
+                padding: const EdgeInsets.all(20),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: Image.asset('assets/GSC_Huge.png'),
+                ),
+              );
+            },
+            subtitleBuilder: (context, action) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: action == AuthAction.signIn
+                    ? const Text('Welcome to FlutterFire, please sign in!')
+                    : const Text('Welcome to Flutterfire, please sign up!'),
+              );
+            },
+            footerBuilder: (context, action) {
+              return const Padding(
+                padding: EdgeInsets.only(top: 16),
+                child: Text(
+                  'By signing in, you agree to our terms and conditions.',
+                  style: TextStyle(color: Colors.grey),
+                ),
+              );
+            },
           );
         })
 
